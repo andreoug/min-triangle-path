@@ -13,7 +13,9 @@ is the inversed and normalized input values.
     *  
     *  
     
-4. The input data are following the guidelines definition ?
-    * input date int
+4. The input data are following the guidelines definition
+    * they are integers.
+    * there might have more than one solutions and this should be covered in this implementation. 
+    
 
 

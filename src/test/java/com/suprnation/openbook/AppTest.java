@@ -1,11 +1,9 @@
 package com.suprnation.openbook;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.util.Scanner;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -14,12 +12,17 @@ import static org.junit.Assert.*;
  * Unit test for simple App.
  */
 public class AppTest {
+
+    private final static String SPLIT_REGEX = " ";
+
     /**
      * Rigorous Test.
      */
 
     @Test
     public void shouldReturnSingleMinTriangleValue_emulateApp() {
+
+        TriangleGraph triangle = new TriangleGraph();
         boolean success = true;
 
         String data =
@@ -27,17 +30,18 @@ public class AppTest {
                 "1 2\n" +
                 "1 2 3\n" +
                 "";
-        InputStream stdin = System.in;
-        System.setIn(new ByteArrayInputStream(data.getBytes()));
-        App.main(null);
-        System.setIn(stdin);
+        List<String> dataArray = Arrays.asList(data.split("\n"));
+        for(String s: dataArray) {
+            triangle.addElements(s.split(SPLIT_REGEX));
+        }
 
-        assertTrue(true);
+        assertThat(triangle.findMinimumTrianglePaths(), is("Minimal path is: 1 + 2 + 3 = 6"));
     }
 
-    @Ignore
     @Test
     public void shouldReturnSingleMinTriangleValueWithDiffNumbers_emulateApp() {
+
+        TriangleGraph triangle = new TriangleGraph();
         boolean success = true;
 
         String data =
@@ -45,17 +49,18 @@ public class AppTest {
             "21 22\n" +
             "31 32 33\n" +
             "";
-        InputStream stdin = System.in;
-        System.setIn(new ByteArrayInputStream(data.getBytes()));
-        App.main(null);
-        System.setIn(stdin);
+        List<String> dataArray = Arrays.asList(data.split("\n"));
+        for(String s: dataArray) {
+            triangle.addElements(s.split(SPLIT_REGEX));
+        }
 
-        assertTrue(true);
+        assertThat(triangle.findMinimumTrianglePaths(), is("Minimal path is: 1 + 22 + 33 = 56"));
     }
 
-    @Ignore
     @Test
     public void shouldReturnMultipleMinTriangleValuesForDifferectPaths_emulateApp() {
+
+        TriangleGraph triangle = new TriangleGraph();
         boolean success = true;
 
         String data =
@@ -63,18 +68,29 @@ public class AppTest {
             "33 32\n" +
             "22 32 33\n" +
             "";
-        InputStream stdin = System.in;
-        System.setIn(new ByteArrayInputStream(data.getBytes()));
-        App.main(null);
-        System.setIn(stdin);
+        List<String> dataArray = Arrays.asList(data.split("\n"));
+        for(String s: dataArray) {
+            triangle.addElements(s.split(SPLIT_REGEX));
+        }
 
-        assertTrue(true);
+        assertThat(triangle.findMinimumTrianglePaths(), is("Minimal path is: 1 + 33 + 32 = 1 + 32 + 33 = 66"));
+
     }
 
     @Test
     public void shouldGetMinimumTrianglePathAsRequested() {
 
-        App app = new App();
-        assertThat(app.getMinimumTrianglePath(), is("1 + 2 + 3 = 6"));
+        TriangleGraph triangle = new TriangleGraph();
+        String data =
+            "1\n" +
+                "33 32\n" +
+                "22 32 33\n" +
+                "";
+        List<String> dataArray = Arrays.asList(data.split("\n"));
+        for(String s: dataArray) {
+            triangle.addElements(s.split(SPLIT_REGEX));
+        }
+
+        assertThat(triangle.findMinimumTrianglePaths(), is("Minimal path is: 1 + 33 + 32 = 1 + 32 + 33 = 66"));
     }
 }

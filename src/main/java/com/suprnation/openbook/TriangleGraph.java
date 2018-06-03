@@ -3,11 +3,11 @@ package com.suprnation.openbook;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.suprnation.openbook.ErrorMessage.NO_DATA_AVAILABLE_ERROR;
+import static com.suprnation.openbook.ErrorMessage.SYSTEM_ERROR;
 
 /**
  * Created by gandreou on 02/06/2018.
@@ -15,7 +15,6 @@ import static com.suprnation.openbook.ErrorMessage.NO_DATA_AVAILABLE_ERROR;
 @Getter @Setter
 public class TriangleGraph {
     private Node root;
-    private String minimumTrianglePath = "1 + 2 + 3 = 6";
 
     private List<Node> latestParents = new ArrayList<>();
 
@@ -45,5 +44,49 @@ public class TriangleGraph {
         }
         newParents.add(right);
         latestParents = newParents;
+    }
+
+    private Integer findMinimumTriangleValue(){
+        List<Node> nodes = root.stream().collect(Collectors.toList());
+
+        Optional<Node> minimumTrianglePathNode = nodes.stream()
+            .peek(this::log)
+            .parallel()
+            .reduce((n1, n2) -> n1.getTrianglePathValue() > n2.getTrianglePathValue() ? n1 : n2);
+
+        return (minimumTrianglePathNode.isPresent()) ? minimumTrianglePathNode.get().getTrianglePathValue() : null;
+    }
+
+    private List<Node> findMinimumTrianglePaths(Integer val) {
+        List<Node> nodes = root.stream().collect(Collectors.toList());
+        List<Node> minimumTrianglePathNodeList = nodes
+            .stream()
+            .filter(node -> node.getTrianglePathValue() == val)
+            .peek(this::log)
+            .parallel()
+            .collect(
+                Collectors.toList()
+            );
+        return minimumTrianglePathNodeList;
+    }
+
+    public String findMinimumTrianglePaths() {
+        Integer minimum = findMinimumTriangleValue();
+        String output = null;
+        if(minimum != null) {
+            List<Node> nodes = findMinimumTrianglePaths(minimum);
+            output = "Minimal path is: ";
+                for(Node d: nodes)
+                    output += d.getTrianglePath() + " = ";
+            output += nodes.get(0).getTrianglePathValue();
+        } else {
+            System.out.println(SYSTEM_ERROR.getMessage());
+            System.exit(1);
+        }
+
+        return output;
+    }
+    private void log(Node node) {
+        System.out.println("node: " + node.getValue() + " trianglePathValue: " + node.getTrianglePathValue() + " trianglePath: " + node.getTrianglePath());
     }
 }

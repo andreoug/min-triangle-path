@@ -11,22 +11,27 @@ import java.util.stream.Stream;
  */
 @Data
 public class Node {
-    private int value;
+    private Integer value;
     private Node parent;
     private List<Node> children;
+
+    private Integer trianglePathValue;
 
     public Node(Node parent, int value) {
         this.parent = parent;
         this.value = value;
     }
 
-    public final int getTrianglePathValue(){
-        int restTrianglePathValue = (parent != null) ? parent.getTrianglePathValue()  : 0;
-        return restTrianglePathValue + value;
+    public final Integer getTrianglePathValue(){
+        if(trianglePathValue == null) {
+            Integer parental = (parent != null) ? parent.getTrianglePathValue() : 0;
+            trianglePathValue = parental + value;
+        }
+            return trianglePathValue;
     }
     public final String getTrianglePath(){
-        String restTrianglePath = (parent != null) ? parent.getTrianglePath() + " + " : "";
-        return restTrianglePath + value;
+        String parental = (parent != null) ? parent.getTrianglePath() + " + " : "";
+        return parental + value;
     }
 
     @Override
