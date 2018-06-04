@@ -13,7 +13,6 @@ is the inversed and normalized input values. But I didn't follow this approach.
     *  If we assume that we need top one and only one solution, then we need only one functional search. 
     *  This implementation is being tested in AllTest's test cases for both latter assumptions).
    
-    
 4. The input data are following the guidelines definition
     * they are integers.
     * the triangle is always equilateral. 
