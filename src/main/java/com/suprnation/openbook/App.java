@@ -17,6 +17,6 @@ public final class App {
             triangle.addElements(s.nextLine().split(SPLIT_REGEX));
         }
 
-        triangle.findMinimumTrianglePaths();
+        triangle.findMinimalPaths();
     }
 }

@@ -34,14 +34,6 @@ public class Node {
         return parental + value;
     }
 
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("Node{");
-        sb.append("value=").append(value);
-        sb.append('}');
-        return sb.toString();
-    }
-
     public Stream<Node> stream() {
         return (children != null) ? Stream.concat(Stream.of(this), children.stream().flatMap(Node::stream))
             : Stream.of(this);

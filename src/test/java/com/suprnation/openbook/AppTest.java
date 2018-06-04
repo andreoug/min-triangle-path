@@ -35,7 +35,7 @@ public class AppTest {
             triangle.addElements(s.split(SPLIT_REGEX));
         }
 
-        assertThat(triangle.findMinimumTrianglePaths(), is("Minimal path is: 1 + 2 + 3 = 6"));
+        assertThat(triangle.findMinimalPaths(), is("Minimal path is: 1 + 2 + 3 = 6"));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class AppTest {
             triangle.addElements(s.split(SPLIT_REGEX));
         }
 
-        assertThat(triangle.findMinimumTrianglePaths(), is("Minimal path is: 1 + 22 + 33 = 56"));
+        assertThat(triangle.findMinimalPaths(), is("Minimal path is: 1 + 22 + 33 = 56"));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class AppTest {
             triangle.addElements(s.split(SPLIT_REGEX));
         }
 
-        assertThat(triangle.findMinimumTrianglePaths(), is("Minimal path is: 1 + 33 + 32 = 1 + 32 + 33 = 66"));
+        assertThat(triangle.findMinimalPaths(), is("Minimal path is: 1 + 33 + 32 = 1 + 32 + 33 = 66"));
 
     }
 
@@ -91,6 +91,6 @@ public class AppTest {
             triangle.addElements(s.split(SPLIT_REGEX));
         }
 
-        assertThat(triangle.findMinimumTrianglePaths(), is("Minimal path is: 1 + 33 + 32 = 1 + 32 + 33 = 66"));
+        assertThat(triangle.findMinimalPaths(), is("Minimal path is: 1 + 33 + 32 = 1 + 32 + 33 = 66"));
     }
 }

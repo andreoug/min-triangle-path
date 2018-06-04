@@ -47,46 +47,37 @@ public class TriangleGraph {
     }
 
     private Integer findMinimumTriangleValue(){
-        List<Node> nodes = root.stream().collect(Collectors.toList());
-
-        Optional<Node> minimumTrianglePathNode = nodes.stream()
-            .peek(this::log)
+        Optional<Node> minimumTrianglePathNode = root.stream()
             .parallel()
             .reduce((n1, n2) -> n1.getTrianglePathValue() > n2.getTrianglePathValue() ? n1 : n2);
 
         return (minimumTrianglePathNode.isPresent()) ? minimumTrianglePathNode.get().getTrianglePathValue() : null;
     }
 
-    private List<Node> findMinimumTrianglePaths(Integer val) {
-        List<Node> nodes = root.stream().collect(Collectors.toList());
-        List<Node> minimumTrianglePathNodeList = nodes
-            .stream()
+    private List<Node> findMinimalPaths(Integer val) {
+        List<Node> minimumTrianglePathNodeList = root.stream()
             .filter(node -> node.getTrianglePathValue() == val)
-            .peek(this::log)
             .parallel()
-            .collect(
-                Collectors.toList()
-            );
+            .collect(Collectors.toList());
+
         return minimumTrianglePathNodeList;
     }
 
-    public String findMinimumTrianglePaths() {
+    public String findMinimalPaths() {
         Integer minimum = findMinimumTriangleValue();
         String output = null;
         if(minimum != null) {
-            List<Node> nodes = findMinimumTrianglePaths(minimum);
+            List<Node> nodes = findMinimalPaths(minimum);
             output = "Minimal path is: ";
                 for(Node d: nodes)
                     output += d.getTrianglePath() + " = ";
             output += nodes.get(0).getTrianglePathValue();
+            System.out.println(output);
         } else {
             System.out.println(SYSTEM_ERROR.getMessage());
             System.exit(1);
         }
 
         return output;
-    }
-    private void log(Node node) {
-        System.out.println("node: " + node.getValue() + " trianglePathValue: " + node.getTrianglePathValue() + " trianglePath: " + node.getTrianglePath());
     }
 }
