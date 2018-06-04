@@ -1,4 +1,4 @@
-#####Assumptions - Notes
+**Assumptions - Notes**
 
 1. While I was reading about the [higher order functions](https://en.wikipedia.org/wiki/Higher-order_function) 
 note in the exercise pdf file, I dialectically supposed that I had to implement the solution of a binary tree and then extend it to higher space dimensions. 
