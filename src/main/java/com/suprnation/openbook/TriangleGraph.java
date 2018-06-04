@@ -32,8 +32,7 @@ public class TriangleGraph {
 
     private void buildTreeLayer(String[] elements) {
         List<Node> newParents = new ArrayList<>();
-        Node left;
-        Node right = null;
+        Node left, right = null;
         int i = 0;
         for(Node parent: latestParents) {
             left = new Node(parent, Integer.valueOf(elements[i]));
@@ -46,12 +45,12 @@ public class TriangleGraph {
         latestParents = newParents;
     }
 
-    private Integer findMinimumTriangleValue(){
-        Optional<Node> minimumTrianglePathNode = root.stream()
+    private Integer findMinimalTriangleValue(){
+        Optional<Node> node = root.stream()
             .parallel()
-            .reduce((n1, n2) -> n1.getTrianglePathValue() > n2.getTrianglePathValue() ? n1 : n2);
+            .collect(Collectors.maxBy(Comparator.comparing(Node::getTrianglePathValue)));
 
-        return (minimumTrianglePathNode.isPresent()) ? minimumTrianglePathNode.get().getTrianglePathValue() : null;
+        return (node.isPresent()) ? node.get().getTrianglePathValue() : null;
     }
 
     private List<Node> findMinimalPaths(Integer val) {
@@ -64,7 +63,7 @@ public class TriangleGraph {
     }
 
     public String findMinimalPaths() {
-        Integer minimum = findMinimumTriangleValue();
+        Integer minimum = findMinimalTriangleValue();
         String output = null;
         if(minimum != null) {
             List<Node> nodes = findMinimalPaths(minimum);
@@ -72,6 +71,25 @@ public class TriangleGraph {
                 for(Node d: nodes)
                     output += d.getTrianglePath() + " = ";
             output += nodes.get(0).getTrianglePathValue();
+            System.out.println(output);
+        } else {
+            System.out.println(SYSTEM_ERROR.getMessage());
+            System.exit(1);
+        }
+
+        return output;
+    }
+
+    public String findMinimalPath() {
+        Optional<Node> node = root.stream()
+            .parallel()
+            .collect(Collectors.maxBy(Comparator.comparing(Node::getTrianglePathValue)));
+
+        String output = null;
+        if(node.isPresent()) {
+            output = "Minimal path is: ";
+            output += node.get().getTrianglePath() + " = ";
+            output += node.get().getTrianglePathValue();
             System.out.println(output);
         } else {
             System.out.println(SYSTEM_ERROR.getMessage());

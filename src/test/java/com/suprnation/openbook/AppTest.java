@@ -27,15 +27,15 @@ public class AppTest {
 
         String data =
             "1\n" +
-                "1 2\n" +
-                "1 2 3\n" +
+                "21 22\n" +
+                "31 32 33\n" +
                 "";
         List<String> dataArray = Arrays.asList(data.split("\n"));
         for(String s: dataArray) {
             triangle.addElements(s.split(SPLIT_REGEX));
         }
 
-        assertThat(triangle.findMinimalPaths(), is("Minimal path is: 1 + 2 + 3 = 6"));
+        assertThat(triangle.findMinimalPath(), is("Minimal path is: 1 + 22 + 33 = 56"));
     }
 
     @Test
@@ -46,15 +46,15 @@ public class AppTest {
 
         String data =
             "1\n" +
-            "21 22\n" +
-            "31 32 33\n" +
+            "33 32\n" +
+            "22 32 33\n" +
             "";
         List<String> dataArray = Arrays.asList(data.split("\n"));
         for(String s: dataArray) {
             triangle.addElements(s.split(SPLIT_REGEX));
         }
 
-        assertThat(triangle.findMinimalPaths(), is("Minimal path is: 1 + 22 + 33 = 56"));
+        assertThat(triangle.findMinimalPath(), is("Minimal path is: 1 + 33 + 32 = 66"));
     }
 
     @Test
@@ -75,22 +75,5 @@ public class AppTest {
 
         assertThat(triangle.findMinimalPaths(), is("Minimal path is: 1 + 33 + 32 = 1 + 32 + 33 = 66"));
 
-    }
-
-    @Test
-    public void shouldGetMinimumTrianglePathAsRequested() {
-
-        TriangleGraph triangle = new TriangleGraph();
-        String data =
-            "1\n" +
-                "33 32\n" +
-                "22 32 33\n" +
-                "";
-        List<String> dataArray = Arrays.asList(data.split("\n"));
-        for(String s: dataArray) {
-            triangle.addElements(s.split(SPLIT_REGEX));
-        }
-
-        assertThat(triangle.findMinimalPaths(), is("Minimal path is: 1 + 33 + 32 = 1 + 32 + 33 = 66"));
     }
 }
